@@ -1,102 +1,75 @@
-# Rigs of Rods multiplayer API
+# Nuxt Minimal Starter
 
-Available online at http://multiplayer.rigsofrods.org
+Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
 
 ## Setup
 
-Requirements:
+Make sure to install dependencies:
 
-* PHP version 5.6+
-* PHP extension 'sockets' (http://php.net/manual/en/book.sockets.php)
+```bash
+# npm
+npm install
 
-Installation:
+# pnpm
+pnpm install
 
-1. Copy .php files from directory "publish" to your webserver.
-2. Run 'multiplayer.sql' script to create + populate database "multiplayer".
-3. Edit "config.include.php" file as necessary.
+# yarn
+yarn install
 
-## Serverlist
+# bun
+bun install
+```
 
-Provides a RESTful API to register and query multiplayer servers. Uses JSON.
+## Development Server
 
-### GET
+Start the development server on `http://localhost:3000`:
 
-Params:
-- **version** (string, optional): RoRNet protocol version. Should have form 'RoRNet_NN'.
-- **json** (bool, optional): Should output be JSON?
+```bash
+# npm
+npm run dev
 
-Output: text/html page.
+# pnpm
+pnpm dev
 
-- On success, HTTP 200 + HTML table of webservers (or JSON with 'json' flag)
-    This is to remain compatible with older RoR releases.
-- On failure, HTTP 500 + plain text error message.
+# yarn
+yarn dev
 
-### POST
+# bun
+bun run dev
+```
 
-Input: JSON payload
+## Production
 
-	{
-	    "name": STRING,
-		"ip": STRING,
-		"port": INT,
-		"terrain-name": STRING (Name of the terrain file, without the '.terrn2' extension),
-		"max-clients": INT,
-		"version": STRING (Version of RoRNet protocol. Should have form 'RoRNet_NN'.),
-	    "is-rcon-enabled": BOOL (optional),
-	    "uses-password": BOOL (optional),
-	    "description": STRING (optional),
-	    "is-official": BOOL (Advertise as official, default: false)
-	}
+Build the application for production:
 
-Output: JSON in form:
+```bash
+# npm
+npm run build
 
-    {
-        'result': true,
-        'message': 'Success',
-        'challenge': CODE (only on success),
-        'verified-level': NUMBER (only on success)
-    }
-    
-- On success, HTTP 200 + JSON as above.
-- On bad parameters, HTTP 400 + JSON with info.
-- If the IP is blacklisted, HTTP 403 + JSON with info.
-- If you're not allowed to register an official server, HTTP 403 + JSON.
-- If serverlist fails to contact and verify the server, HTTP 503 + JSON.
-- If server name already exists, HTTP 409 "Conflict" + JSON.
-- On internal failure (database for example), HTTP 500 + JSON with info.
+# pnpm
+pnpm build
 
-### PUT (Heartbeat)
+# yarn
+yarn build
 
-Input: JSON payload
+# bun
+bun run build
+```
 
-	{
-	    "challenge: : STRING,
-	    "users: [STRING] (array of user nicknames)
-	}
+Locally preview production build:
 
-Output: JSON in form:
+```bash
+# npm
+npm run preview
 
-    {
-        'result': true,
-        'message': 'Success'
-    }
+# pnpm
+pnpm preview
 
-- On success, HTTP 200 + JSON as above.
-- On bad parameters, HTTP 400 + JSON with info.
-- On internal failure (database for example), HTTP 500 + JSON with info.
+# yarn
+yarn preview
 
-### DELETE
+# bun
+bun run preview
+```
 
-Params (submitted via URL):
-- **challenge** (string)
-
-Output: JSON in form:
-
-    {
-        'result': true,
-        'message': 'Success'
-    }
-
-- On success, HTTP 200 + JSON as above.
-- On bad parameters, HTTP 400 + JSON with info.
-- On internal failure (database for example), HTTP 500 + JSON with info.
+Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
